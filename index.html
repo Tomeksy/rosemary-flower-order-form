@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blumenbestellung</title>
+
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Link to external JavaScript file -->
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="rosemary-form">
+        <h2>Blumenbestellung</h2>
+        
+        <div class="progress-bar">
+            <div class="progress-step active" id="step1-progress">Auswahl</div>
+            <div class="progress-step" id="step2-progress">Termin</div>
+            <div class="progress-step" id="step3-progress">Kontakt</div>
+            <div class="progress-step" id="step4-progress">Zusammenfassung</div>
+        </div>
+        
+        <form id="flowerOrderForm" onsubmit="return submitForm()">
+            <div id="step1">
+                <div class="gallery-container">
+                    <div class="category-tabs">
+                        <div class="category-tab active" data-category="bouquets">Blumensträuße</div>
+                        <div class="category-tab" data-category="wreaths">Kranz</div>
+                        <div class="category-tab" data-category="roses">Rosen</div>
+                        <div class="category-tab" data-category="special">Rosemary-Special</div>
+                    </div>
+                    <div class="gallery-carousel" id="gallery-carousel">
+                        <!-- Gallery items will be dynamically inserted here -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="selectedFlower">Ausgewählte Blumen:</label>
+                    <input type="text" id="selectedFlower" name="selectedFlower" readonly required>
+                </div>
+                <div class="form-group">
+                    <label for="notes">Anmerkungen:</label>
+                    <textarea id="notes" name="notes"></textarea>
+                </div>
+                <button type="button" onclick="showStep(2)">Weiter</button>
+            </div>
+
+            <div id="step2" style="display: none;">
+                <div class="form-group">
+                    <label for="pickupDate">Abholdatum:</label>
+                    <input type="date" id="pickupDate" name="pickupDate" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="pickupTime">Abholzeit:</label>
+                    <select id="pickupTime" name="pickupTime" required aria-required="true">
+                        <option value="">Bitte wählen</option>
+                        <option value="09:00">09:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="12:00">12:00</option>
+                        <option value="13:00">13:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" onclick="showStep(1)">Zurück</button>
+                    <button type="button" onclick="showStep(3)">Weiter</button>
+                </div>
+            </div>
+
+            <div id="step3" style="display: none;">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="email">E-Mail:</label>
+                    <input type="email" id="email" name="email" required aria-required="true">
+                    <div class="error-message" id="email-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefon:</label>
+                    <input type="tel" id="phone" name="phone" required aria-required="true">
+                    <div class="error-message" id="phone-error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="payment">Zahlungsmethode:</label>
+                    <select id="payment" name="payment" required aria-required="true">
+                        <option value="">Bitte wählen</option>
+                        <option value="now">Jetzt bezahlen</option>
+                        <option value="pickup">Bei Abholung bezahlen</option>
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" onclick="showStep(2)">Zurück</button>
+                    <button type="button" onclick="showSummary()">Zusammenfassung anzeigen</button>
+                </div>
+            </div>
+
+            <div id="step4" style="display: none;">
+                <h3>Bestellzusammenfassung</h3>
+                <div id="orderSummary"></div>
+                <div class="form-buttons">
+                    <button type="button" onclick="showStep(3)">Zurück</button>
+                    <button type="submit">Bestellung aufgeben</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <img id="modalImage" src="" alt="" style="width: 100%; max-height: 300px; object-fit: cover;">
+            <p id="modalDescription"></p>
+            <button id="selectButton">Auswählen</button>
+        </div>
+    </div>
+
+    <div class="loading">
+        <div class="loading-spinner"></div>
+    </div>
+</body>
+</html>
